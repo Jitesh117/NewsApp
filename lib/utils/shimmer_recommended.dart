@@ -25,7 +25,7 @@ class ShimmerRecommended extends StatelessWidget {
                   height: 70,
                   width: 70,
                   decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
+                      color: Colors.grey.shade200,
                       borderRadius: BorderRadius.circular(8)),
                 ),
               ),
@@ -40,7 +40,7 @@ class ShimmerRecommended extends StatelessWidget {
                       height: 30,
                       width: 200,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
+                        color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
@@ -53,7 +53,7 @@ class ShimmerRecommended extends StatelessWidget {
                       height: 30,
                       width: 100,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
+                        color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
