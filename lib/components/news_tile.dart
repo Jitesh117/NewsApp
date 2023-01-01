@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
+import '../utils/loaded_news_tile.dart';
 import '../utils/shimmer_news_tile.dart';
 
 class NewsTile extends StatelessWidget {

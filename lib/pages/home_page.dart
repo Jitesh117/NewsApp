@@ -1,11 +1,42 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:news/utils/loaded_news_tile.dart';
+import 'package:news/utils/news_data.dart';
+import 'package:news/utils/shimmer_news_tile.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../components/category_tile.dart';
 import '../components/news_tile.dart';
 import '../components/recommended_tile.dart';
+import 'package:http/http.dart' as http;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _isLoading = true;
+  String imagePath = '';
+  String newsTitle = '';
+  void fetchData() async {
+    http.Response response;
+    response = await http
+        .get(Uri.parse('https://inshorts.deta.dev/news?category=science'));
+    NewsData newsData = NewsData.fromJson(json.decode(response.body));
+    imagePath = newsData.data![0].imageUrl!;
+    newsTitle = newsData.data![0].title!;
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +132,36 @@ class HomePage extends StatelessWidget {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        NewsTile(),
-                        NewsTile(),
-                        NewsTile(),
-                        NewsTile(),
+                        _isLoading
+                            ? ShimmerNewsTile()
+                            : LoadedNews(
+                                imagePath: imagePath,
+                                newsTitle: newsTitle,
+                              ),
+                        _isLoading
+                            ? ShimmerNewsTile()
+                            : LoadedNews(
+                                imagePath: imagePath,
+                                newsTitle: newsTitle,
+                              ),
+                        _isLoading
+                            ? ShimmerNewsTile()
+                            : LoadedNews(
+                                imagePath: imagePath,
+                                newsTitle: newsTitle,
+                              ),
+                        _isLoading
+                            ? ShimmerNewsTile()
+                            : LoadedNews(
+                                imagePath: imagePath,
+                                newsTitle: newsTitle,
+                              ),
+                        _isLoading
+                            ? ShimmerNewsTile()
+                            : LoadedNews(
+                                imagePath: imagePath,
+                                newsTitle: newsTitle,
+                              ),
                       ],
                     ),
                   ),

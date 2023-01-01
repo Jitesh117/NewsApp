@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
-class ShimmerNewsTile extends StatelessWidget {
+class ShimmerNewsTile extends StatefulWidget {
   const ShimmerNewsTile({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ShimmerNewsTile> createState() => _ShimmerNewsTileState();
+}
+
+class _ShimmerNewsTileState extends State<ShimmerNewsTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,7 +31,7 @@ class ShimmerNewsTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Shimmer(
-                  duration: Duration(seconds: 2),
+                  duration: Duration(seconds: 1),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
@@ -40,7 +45,7 @@ class ShimmerNewsTile extends StatelessWidget {
                   height: 10,
                 ),
                 Shimmer(
-                  duration: Duration(seconds: 2),
+                  duration: Duration(seconds: 1),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
@@ -54,7 +59,7 @@ class ShimmerNewsTile extends StatelessWidget {
                   height: 10,
                 ),
                 Shimmer(
-                  duration: Duration(seconds: 2),
+                  duration: Duration(seconds: 1),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
@@ -68,7 +73,7 @@ class ShimmerNewsTile extends StatelessWidget {
                   height: 10,
                 ),
                 Shimmer(
-                  duration: Duration(seconds: 2),
+                  duration: Duration(seconds: 1),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
