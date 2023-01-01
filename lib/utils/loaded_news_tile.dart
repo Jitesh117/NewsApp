@@ -5,9 +5,11 @@ class LoadedNews extends StatelessWidget {
     Key? key,
     required this.imagePath,
     required this.newsTitle,
+    required this.newsDate,
   }) : super(key: key);
   final String imagePath;
   final String newsTitle;
+  final String newsDate;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,36 +49,44 @@ class LoadedNews extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  newsTitle,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        newsTitle,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            newsDate,
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Read More...',
+                            style: TextStyle(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 45,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '27 Dec 2022,Tuesday',
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Read More...',
-                      style: TextStyle(
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
               ],
             ),
           ),

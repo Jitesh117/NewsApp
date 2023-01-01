@@ -18,15 +18,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
-  String imagePath = '';
-  String newsTitle = '';
-  void fetchData() async {
+  List<Map<String, String>> dataList = List.generate(5, (index) => {});
+  void fetchData(String category) async {
+    setState(() {
+      _isLoading = true;
+    });
     http.Response response;
     response = await http
-        .get(Uri.parse('https://inshorts.deta.dev/news?category=science'));
+        .get(Uri.parse('https://inshorts.deta.dev/news?category=${category}'));
     NewsData newsData = NewsData.fromJson(json.decode(response.body));
-    imagePath = newsData.data![0].imageUrl!;
-    newsTitle = newsData.data![0].title!;
+    for (int i = 0; i < 5; i++) {
+      dataList[i].addAll({
+        'imagePath': newsData.data![i].imageUrl!,
+        'newsTitle': newsData.data![i].title!,
+        'date': newsData.data![i].date!
+      });
+    }
     setState(() {
       _isLoading = false;
     });
@@ -34,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    fetchData();
+    fetchData('national');
     super.initState();
   }
 
@@ -68,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                       Colors.deepPurple,
                       Colors.cyan,
                     ],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
@@ -81,37 +88,61 @@ class _HomePageState extends State<HomePage> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        CategoryTile(
-                          categoryName: 'National',
-                          imagePath: 'lib/assets/national.png',
+                        GestureDetector(
+                          onTap: () => fetchData('national'),
+                          child: CategoryTile(
+                            categoryName: 'National',
+                            imagePath: 'lib/assets/national.png',
+                          ),
                         ),
-                        CategoryTile(
-                          categoryName: 'Sports',
-                          imagePath: 'lib/assets/sports.png',
+                        GestureDetector(
+                          onTap: () => fetchData('sports'),
+                          child: CategoryTile(
+                            categoryName: 'Sports',
+                            imagePath: 'lib/assets/sports.png',
+                          ),
                         ),
-                        CategoryTile(
-                          categoryName: 'Business',
-                          imagePath: 'lib/assets/business.png',
+                        GestureDetector(
+                          onTap: () => fetchData('business'),
+                          child: CategoryTile(
+                            categoryName: 'Business',
+                            imagePath: 'lib/assets/business.png',
+                          ),
                         ),
-                        CategoryTile(
-                          categoryName: 'World',
-                          imagePath: 'lib/assets/world.png',
+                        GestureDetector(
+                          onTap: () => fetchData('world'),
+                          child: CategoryTile(
+                            categoryName: 'World',
+                            imagePath: 'lib/assets/world.png',
+                          ),
                         ),
-                        CategoryTile(
-                          categoryName: 'Politics',
-                          imagePath: 'lib/assets/politics.png',
+                        GestureDetector(
+                          onTap: () => fetchData('politics'),
+                          child: CategoryTile(
+                            categoryName: 'Politics',
+                            imagePath: 'lib/assets/politics.png',
+                          ),
                         ),
-                        CategoryTile(
-                          categoryName: 'Technology',
-                          imagePath: 'lib/assets/technology.png',
+                        GestureDetector(
+                          onTap: () => fetchData('technology'),
+                          child: CategoryTile(
+                            categoryName: 'Technology',
+                            imagePath: 'lib/assets/technology.png',
+                          ),
                         ),
-                        CategoryTile(
-                          categoryName: 'Startup',
-                          imagePath: 'lib/assets/startup.png',
+                        GestureDetector(
+                          onTap: () => fetchData('startup'),
+                          child: CategoryTile(
+                            categoryName: 'Startup',
+                            imagePath: 'lib/assets/startup.png',
+                          ),
                         ),
-                        CategoryTile(
-                          categoryName: 'Science',
-                          imagePath: 'lib/assets/science.png',
+                        GestureDetector(
+                          onTap: () => fetchData('science'),
+                          child: CategoryTile(
+                            categoryName: 'Science',
+                            imagePath: 'lib/assets/science.png',
+                          ),
                         ),
                       ],
                     ),
@@ -129,41 +160,18 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Expanded(
                     flex: 7,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        _isLoading
-                            ? ShimmerNewsTile()
-                            : LoadedNews(
-                                imagePath: imagePath,
-                                newsTitle: newsTitle,
-                              ),
-                        _isLoading
-                            ? ShimmerNewsTile()
-                            : LoadedNews(
-                                imagePath: imagePath,
-                                newsTitle: newsTitle,
-                              ),
-                        _isLoading
-                            ? ShimmerNewsTile()
-                            : LoadedNews(
-                                imagePath: imagePath,
-                                newsTitle: newsTitle,
-                              ),
-                        _isLoading
-                            ? ShimmerNewsTile()
-                            : LoadedNews(
-                                imagePath: imagePath,
-                                newsTitle: newsTitle,
-                              ),
-                        _isLoading
-                            ? ShimmerNewsTile()
-                            : LoadedNews(
-                                imagePath: imagePath,
-                                newsTitle: newsTitle,
-                              ),
-                      ],
-                    ),
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return _isLoading
+                              ? ShimmerNewsTile()
+                              : LoadedNews(
+                                  imagePath: dataList[index]["imagePath"]!,
+                                  newsTitle: dataList[index]["newsTitle"]!,
+                                  newsDate: dataList[index]["date"]!,
+                                );
+                        }),
                   ),
                   const SizedBox(
                     height: 20,
