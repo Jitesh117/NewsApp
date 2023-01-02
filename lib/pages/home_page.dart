@@ -18,10 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
+  String chosenCategory = 'National news';
   List<Map<String, String>> dataList = List.generate(5, (index) => {});
   void fetchData(String category) async {
     setState(() {
       _isLoading = true;
+      chosenCategory = category + ' news';
+      chosenCategory = chosenCategory.toUpperCase();
     });
     http.Response response;
     response = await http
@@ -48,149 +51,172 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey.shade200,
-        body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              colors: [
-                Colors.grey.shade200,
-                Colors.grey.shade100,
-              ],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-            )),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 16.0,
-                right: 16,
-                top: 30,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GradientText(
-                    'Your Daily News',
-                    colors: const [
-                      Colors.deepPurple,
-                      Colors.cyan,
+      backgroundColor: Colors.grey.shade200,
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            colors: [
+              Colors.grey.shade200,
+              Colors.grey.shade100,
+            ],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          )),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              right: 16,
+              top: 30,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GradientText(
+                  'Your Daily News',
+                  colors: const [
+                    Colors.deepPurple,
+                    Colors.cyan,
+                  ],
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('national');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'National',
+                          imagePath: 'lib/assets/national.png',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('sports');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'Sports',
+                          imagePath: 'lib/assets/sports.png',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('business');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'Business',
+                          imagePath: 'lib/assets/business.png',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('world');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'World',
+                          imagePath: 'lib/assets/world.png',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('politics');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'Politics',
+                          imagePath: 'lib/assets/politics.png',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('technology');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'Technology',
+                          imagePath: 'lib/assets/technology.png',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('startup');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'startup',
+                          imagePath: 'lib/assets/startup.png',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          fetchData('science');
+                        },
+                        child: CategoryTile(
+                          categoryName: 'Science',
+                          imagePath: 'lib/assets/science.png',
+                        ),
+                      ),
                     ],
-                    style: const TextStyle(
-                      fontSize: 30,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                // News tiles
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    chosenCategory,
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  flex: 7,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return _isLoading
+                          ? ShimmerNewsTile()
+                          : LoadedNews(
+                              imagePath: dataList[index]["imagePath"]!,
+                              newsTitle: dataList[index]["newsTitle"]!,
+                              newsDate: dataList[index]["date"]!,
+                            );
+                    },
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        GestureDetector(
-                          onTap: () => fetchData('national'),
-                          child: CategoryTile(
-                            categoryName: 'National',
-                            imagePath: 'lib/assets/national.png',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => fetchData('sports'),
-                          child: CategoryTile(
-                            categoryName: 'Sports',
-                            imagePath: 'lib/assets/sports.png',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => fetchData('business'),
-                          child: CategoryTile(
-                            categoryName: 'Business',
-                            imagePath: 'lib/assets/business.png',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => fetchData('world'),
-                          child: CategoryTile(
-                            categoryName: 'World',
-                            imagePath: 'lib/assets/world.png',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => fetchData('politics'),
-                          child: CategoryTile(
-                            categoryName: 'Politics',
-                            imagePath: 'lib/assets/politics.png',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => fetchData('technology'),
-                          child: CategoryTile(
-                            categoryName: 'Technology',
-                            imagePath: 'lib/assets/technology.png',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => fetchData('startup'),
-                          child: CategoryTile(
-                            categoryName: 'Startup',
-                            imagePath: 'lib/assets/startup.png',
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => fetchData('science'),
-                          child: CategoryTile(
-                            categoryName: 'Science',
-                            imagePath: 'lib/assets/science.png',
-                          ),
-                        ),
-                      ],
-                    ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: ListView(
+                    children: [
+                      RecommendedTile(),
+                      RecommendedTile(),
+                      RecommendedTile(),
+                      RecommendedTile(),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  // News tiles
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Chosen category'),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    flex: 7,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return _isLoading
-                              ? ShimmerNewsTile()
-                              : LoadedNews(
-                                  imagePath: dataList[index]["imagePath"]!,
-                                  newsTitle: dataList[index]["newsTitle"]!,
-                                  newsDate: dataList[index]["date"]!,
-                                );
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: ListView(
-                      children: [
-                        RecommendedTile(),
-                        RecommendedTile(),
-                        RecommendedTile(),
-                        RecommendedTile(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
