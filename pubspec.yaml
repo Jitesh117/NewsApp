@@ -39,6 +39,7 @@ dependencies:
   shimmer_animation: ^2.1.0+1
   http: ^0.13.5
   cached_network_image: ^3.2.1
+  url_launcher: ^5.2.7
 
 dev_dependencies:
   flutter_lints: ^2.0.1

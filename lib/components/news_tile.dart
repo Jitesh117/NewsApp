@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoadedNews extends StatelessWidget {
   const LoadedNews({
@@ -6,10 +7,12 @@ class LoadedNews extends StatelessWidget {
     required this.imagePath,
     required this.newsTitle,
     required this.newsDate,
+    required this.readMoreUrl,
   }) : super(key: key);
   final String imagePath;
   final String newsTitle;
   final String newsDate;
+  final String readMoreUrl;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -73,10 +76,25 @@ class LoadedNews extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            'Read More...',
-                            style: TextStyle(
-                              color: Colors.blue,
+                          GestureDetector(
+                            onTap: () async {
+                              String url = readMoreUrl;
+                              if (await canLaunch(
+                                url,
+                              )) {
+                                await launch(
+                                  url,
+                                  forceWebView: true,
+                                );
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            child: Text(
+                              'Read More...',
+                              style: TextStyle(
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
                         ],

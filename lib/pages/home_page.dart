@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-// TODO: add url opener of the news tiles when the user taps on read more
 // TODO: add a tiktok style scroller for news when the user taps
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
@@ -41,7 +40,8 @@ class _HomePageState extends State<HomePage> {
       recommendedList[i].addAll({
         'imagePath': newsData.data![i].imageUrl!,
         'newsTitle': newsData.data![i].title!,
-        'date': newsData.data![i].date!
+        'date': newsData.data![i].date!,
+        'readMoreURL': newsData.data![i].url!,
       });
     }
     setState(() {
@@ -65,7 +65,8 @@ class _HomePageState extends State<HomePage> {
       dataList[i].addAll({
         'imagePath': newsData.data![i].imageUrl!,
         'newsTitle': newsData.data![i].title!,
-        'date': newsData.data![i].date!
+        'date': newsData.data![i].date!,
+        'readMoreURL': newsData.data![i].url!,
       });
     }
     setState(() {
@@ -255,6 +256,7 @@ class _HomePageState extends State<HomePage> {
                               imagePath: dataList[index]["imagePath"]!,
                               newsTitle: dataList[index]["newsTitle"]!,
                               newsDate: dataList[index]["date"]!,
+                              readMoreUrl: dataList[index]["readMoreURL"]!,
                             );
                     },
                   ),
@@ -283,7 +285,10 @@ class _HomePageState extends State<HomePage> {
                           ? ShimmerRecommended()
                           : RecommendedTile(
                               imagePath: recommendedList[index]["imagePath"]!,
-                              newsTitle: recommendedList[index]["newsTitle"]!);
+                              newsTitle: recommendedList[index]["newsTitle"]!,
+                              readMoreUrl: recommendedList[index]
+                                  ["readMoreURL"]!,
+                            );
                     },
                   ),
                 ),
