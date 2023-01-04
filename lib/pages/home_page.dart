@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:news/utils/loaded_news_tile.dart';
+import 'package:news/components/news_tile.dart';
 import 'package:news/utils/news_data.dart';
 import 'package:news/utils/shimmer_news_tile.dart';
+import 'package:news/utils/shimmer_recommended.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../components/category_tile.dart';
-import '../components/news_tile.dart';
 import '../components/recommended_tile.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,19 +18,47 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
+  bool _isRecommendedLoading = true;
   String chosenCategory = 'National news';
-  List<Map<String, String>> dataList = List.generate(5, (index) => {});
+  int itemCount = 5;
+  int recommendedItemCount = 5;
+  List<Map<String, String>> dataList = List.generate(100, (index) => {});
+  List<Map<String, String>> recommendedList = List.generate(100, (index) => {});
+
+  void fetchRecommended() async {
+    setState(() {
+      _isRecommendedLoading = true;
+      recommendedItemCount = 5;
+    });
+    http.Response response;
+    response = await http
+        .get(Uri.parse('https://inshorts.deta.dev/news?category=all'));
+    NewsData newsData = NewsData.fromJson(json.decode(response.body));
+    for (int i = 0; i < newsData.data!.length; i++) {
+      recommendedList[i].addAll({
+        'imagePath': newsData.data![i].imageUrl!,
+        'newsTitle': newsData.data![i].title!,
+        'date': newsData.data![i].date!
+      });
+    }
+    setState(() {
+      _isRecommendedLoading = false;
+      recommendedItemCount = newsData.data!.length;
+    });
+  }
+
   void fetchData(String category) async {
     setState(() {
       _isLoading = true;
-      chosenCategory = category + ' news';
+      chosenCategory = '$category news';
       chosenCategory = chosenCategory.toUpperCase();
+      itemCount = 5;
     });
     http.Response response;
     response = await http
         .get(Uri.parse('https://inshorts.deta.dev/news?category=${category}'));
     NewsData newsData = NewsData.fromJson(json.decode(response.body));
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < newsData.data!.length; i++) {
       dataList[i].addAll({
         'imagePath': newsData.data![i].imageUrl!,
         'newsTitle': newsData.data![i].title!,
@@ -39,12 +67,14 @@ class _HomePageState extends State<HomePage> {
     }
     setState(() {
       _isLoading = false;
+      itemCount = newsData.data!.length;
     });
   }
 
   @override
   void initState() {
     fetchData('national');
+    fetchRecommended();
     super.initState();
   }
 
@@ -95,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('national');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'National',
                           imagePath: 'lib/assets/national.png',
                         ),
@@ -104,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('sports');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'Sports',
                           imagePath: 'lib/assets/sports.png',
                         ),
@@ -113,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('business');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'Business',
                           imagePath: 'lib/assets/business.png',
                         ),
@@ -122,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('world');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'World',
                           imagePath: 'lib/assets/world.png',
                         ),
@@ -131,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('politics');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'Politics',
                           imagePath: 'lib/assets/politics.png',
                         ),
@@ -140,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('technology');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'Technology',
                           imagePath: 'lib/assets/technology.png',
                         ),
@@ -149,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('startup');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'startup',
                           imagePath: 'lib/assets/startup.png',
                         ),
@@ -158,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           fetchData('science');
                         },
-                        child: CategoryTile(
+                        child: const CategoryTile(
                           categoryName: 'Science',
                           imagePath: 'lib/assets/science.png',
                         ),
@@ -174,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     chosenCategory,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -186,10 +216,10 @@ class _HomePageState extends State<HomePage> {
                   flex: 7,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 5,
+                    itemCount: itemCount,
                     itemBuilder: (context, index) {
                       return _isLoading
-                          ? ShimmerNewsTile()
+                          ? const ShimmerNewsTile()
                           : LoadedNews(
                               imagePath: dataList[index]["imagePath"]!,
                               newsTitle: dataList[index]["newsTitle"]!,
@@ -201,15 +231,29 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20,
                 ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    'Recommended News',
+                    // style: TextStyle(
+                    //   fontWeight: FontWeight.normal,
+                    // ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Expanded(
                   flex: 3,
-                  child: ListView(
-                    children: [
-                      RecommendedTile(),
-                      RecommendedTile(),
-                      RecommendedTile(),
-                      RecommendedTile(),
-                    ],
+                  child: ListView.builder(
+                    itemCount: recommendedItemCount,
+                    itemBuilder: (context, index) {
+                      return _isRecommendedLoading
+                          ? ShimmerRecommended()
+                          : RecommendedTile(
+                              imagePath: recommendedList[index]["imagePath"]!,
+                              newsTitle: recommendedList[index]["newsTitle"]!);
+                    },
                   ),
                 ),
               ],

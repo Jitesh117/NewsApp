@@ -21,6 +21,7 @@ class ShimmerRecommended extends StatelessWidget {
           child: Row(
             children: [
               Shimmer(
+                duration: Duration(seconds: 1),
                 child: Container(
                   height: 70,
                   width: 70,
@@ -36,6 +37,7 @@ class ShimmerRecommended extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Shimmer(
+                    duration: Duration(seconds: 1),
                     child: Container(
                       height: 30,
                       width: 200,
@@ -49,6 +51,7 @@ class ShimmerRecommended extends StatelessWidget {
                     height: 10,
                   ),
                   Shimmer(
+                    duration: Duration(seconds: 1),
                     child: Container(
                       height: 30,
                       width: 100,
