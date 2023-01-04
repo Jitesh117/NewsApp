@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class CategoryTile extends StatelessWidget {
   const CategoryTile({
     Key? key,
     required this.categoryName,
     required this.imagePath,
+    required this.isSelected,
   }) : super(key: key);
   final String categoryName;
   final String imagePath;
+  final bool isSelected;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,10 +24,15 @@ class CategoryTile extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [
-              Colors.red.shade100,
-              Colors.deepPurple.shade100,
-            ],
+            colors: isSelected
+                ? [
+                    Colors.deepPurple,
+                    Colors.red.shade300,
+                  ]
+                : [
+                    Colors.blue.shade900,
+                    Colors.cyan,
+                  ],
           ),
         ),
         child: Row(

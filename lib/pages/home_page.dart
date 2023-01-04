@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+// TODO: add url opener of the news tiles when the user taps on read more
+// TODO: add a tiktok style scroller for news when the user taps
 class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
   bool _isRecommendedLoading = true;
@@ -24,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   int recommendedItemCount = 5;
   List<Map<String, String>> dataList = List.generate(100, (index) => {});
   List<Map<String, String>> recommendedList = List.generate(100, (index) => {});
+  List<bool> isSelected = List.generate(11, (index) => false);
 
   void fetchRecommended() async {
     setState(() {
@@ -71,10 +74,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void selectCategory(int i) {
+    setState(
+      () {
+        for (int category = 0; category < 10; category++) {
+          isSelected[category] = false;
+        }
+        isSelected[i] = true;
+      },
+    );
+  }
+
   @override
   void initState() {
     fetchData('national');
     fetchRecommended();
+    selectCategory(0);
     super.initState();
   }
 
@@ -124,73 +139,89 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                         onTap: () {
                           fetchData('national');
+                          selectCategory(0);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'National',
                           imagePath: 'lib/assets/national.png',
+                          isSelected: isSelected[0],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           fetchData('sports');
+                          selectCategory(1);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'Sports',
                           imagePath: 'lib/assets/sports.png',
+                          isSelected: isSelected[1],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           fetchData('business');
+                          selectCategory(2);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'Business',
                           imagePath: 'lib/assets/business.png',
+                          isSelected: isSelected[2],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           fetchData('world');
+                          selectCategory(3);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'World',
                           imagePath: 'lib/assets/world.png',
+                          isSelected: isSelected[3],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           fetchData('politics');
+                          selectCategory(4);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'Politics',
                           imagePath: 'lib/assets/politics.png',
+                          isSelected: isSelected[4],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           fetchData('technology');
+                          selectCategory(5);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'Technology',
                           imagePath: 'lib/assets/technology.png',
+                          isSelected: isSelected[5],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           fetchData('startup');
+                          selectCategory(6);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'startup',
                           imagePath: 'lib/assets/startup.png',
+                          isSelected: isSelected[6],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           fetchData('science');
+                          selectCategory(7);
                         },
-                        child: const CategoryTile(
+                        child: CategoryTile(
                           categoryName: 'Science',
                           imagePath: 'lib/assets/science.png',
+                          isSelected: isSelected[7],
                         ),
                       ),
                     ],
@@ -200,15 +231,15 @@ class _HomePageState extends State<HomePage> {
                   height: 20,
                 ),
                 // News tiles
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    chosenCategory,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 8.0),
+                //   child: Text(
+                //     chosenCategory,
+                //     style: const TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 20,
                 ),
