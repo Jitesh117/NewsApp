@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class LoadedNews extends StatelessWidget {
   const LoadedNews({
@@ -21,7 +22,7 @@ class LoadedNews extends StatelessWidget {
         width: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
+          color: Colors.grey.shade800,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -62,6 +63,7 @@ class LoadedNews extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
+                          color: Colors.cyan.shade400,
                         ),
                       ),
                       Column(
@@ -71,6 +73,7 @@ class LoadedNews extends StatelessWidget {
                             newsDate,
                             style: TextStyle(
                               fontSize: 12,
+                              color: Colors.grey.shade400,
                             ),
                           ),
                           const SizedBox(

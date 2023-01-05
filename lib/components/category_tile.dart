@@ -26,8 +26,8 @@ class CategoryTile extends StatelessWidget {
             end: Alignment.bottomLeft,
             colors: isSelected
                 ? [
-                    Colors.deepPurple,
-                    Colors.red.shade300,
+                    Colors.red,
+                    Colors.orange,
                   ]
                 : [
                     Colors.blue.shade900,

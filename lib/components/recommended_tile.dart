@@ -33,7 +33,7 @@ class RecommendedTile extends StatelessWidget {
           height: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: Colors.white,
+            color: Colors.grey.shade800,
           ),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -61,6 +61,9 @@ class RecommendedTile extends StatelessWidget {
                 Flexible(
                   child: Text(
                     newsTitle,
+                    style: TextStyle(
+                      color: Colors.cyan.shade400,
+                    ),
                   ),
                 ),
                 const SizedBox(

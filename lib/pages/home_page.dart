@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:news/components/news_tile.dart';
 import 'package:news/utils/news_data.dart';
 import 'package:news/utils/shimmer_news_tile.dart';
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.grey.shade800,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -126,11 +127,18 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                   colors: [
-                    Colors.grey.shade200,
-                    Colors.grey.shade100,
+                    Colors.grey.shade900,
+                    // Colors.grey.shade800,
+                    // Colors.grey.shade700,
+                    // Colors.grey.shade600,
+                    // Colors.cyan.shade800,
+                    // Colors.grey.shade600,
+                    // Colors.grey.shade700,
+                    // Colors.grey.shade800,
+                    Colors.grey.shade900,
                   ],
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
                 )),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -142,10 +150,10 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GradientText(
-                        'Your Daily News',
+                        'News that Matter',
                         colors: const [
-                          Colors.deepPurple,
-                          Colors.cyan,
+                          Colors.red,
+                          Colors.orange,
                         ],
                         style: const TextStyle(
                           fontSize: 30,
@@ -292,6 +300,9 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.only(left: 8.0),
                         child: Text(
                           'Recommended News',
+                          style: TextStyle(
+                            color: Colors.grey.shade300,
+                          ),
                         ),
                       ),
                       const SizedBox(

@@ -41,6 +41,7 @@ dependencies:
   cached_network_image: ^3.2.1
   url_launcher: ^5.2.7
   flutter_native_splash: ^2.2.9
+  flutter_neumorphic: ^3.2.0
 
 dev_dependencies:
   flutter_lints: ^2.0.1
@@ -63,7 +64,7 @@ flutter_native_splash:
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
-  color: "#FFFFFF"
+  color: "#5A5A5A"
   #background_image: "assets/background.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
@@ -71,7 +72,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: lib/assets/news.png
+  image: lib/assets/news512.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,

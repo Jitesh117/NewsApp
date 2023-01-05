@@ -19,7 +19,7 @@ class _ShimmerNewsTileState extends State<ShimmerNewsTile> {
         width: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: Colors.white,
+          color: Colors.grey.shade800,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -32,9 +32,10 @@ class _ShimmerNewsTileState extends State<ShimmerNewsTile> {
               children: [
                 Shimmer(
                   duration: Duration(seconds: 1),
+                  color: Colors.cyan.shade400,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Colors.grey.shade700,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     height: 200,
@@ -46,9 +47,10 @@ class _ShimmerNewsTileState extends State<ShimmerNewsTile> {
                 ),
                 Shimmer(
                   duration: Duration(seconds: 1),
+                  color: Colors.cyan.shade400,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Colors.grey.shade700,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     height: 30,
@@ -59,10 +61,11 @@ class _ShimmerNewsTileState extends State<ShimmerNewsTile> {
                   height: 10,
                 ),
                 Shimmer(
+                  color: Colors.cyan.shade400,
                   duration: Duration(seconds: 1),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Colors.grey.shade700,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     height: 30,
@@ -73,10 +76,11 @@ class _ShimmerNewsTileState extends State<ShimmerNewsTile> {
                   height: 10,
                 ),
                 Shimmer(
+                  color: Colors.cyan.shade400,
                   duration: Duration(seconds: 1),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Colors.grey.shade700,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     height: 30,
