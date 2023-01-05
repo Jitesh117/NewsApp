@@ -20,13 +20,13 @@ class LoadedNews extends StatelessWidget {
       child: Container(
         width: 300,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           color: Colors.white,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 26,
-            horizontal: 18,
+            vertical: 20,
+            horizontal: 20,
           ),
           child: Center(
             child: Column(
@@ -35,7 +35,7 @@ class LoadedNews extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   height: 200,
                   width: 300,
