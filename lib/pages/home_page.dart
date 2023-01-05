@@ -26,6 +26,16 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, String>> dataList = List.generate(100, (index) => {});
   List<Map<String, String>> recommendedList = List.generate(100, (index) => {});
   List<bool> isSelected = List.generate(11, (index) => false);
+  List<String> categories = [
+    'national',
+    'sports',
+    'business',
+    'world',
+    'politics',
+    'technology',
+    'startup',
+    'science'
+  ];
 
   void fetchRecommended() async {
     setState(() {
@@ -101,8 +111,12 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            fetchData('national');
             fetchRecommended();
+            for (int category = 0; category < 10; category++) {
+              if (isSelected[category] == true) {
+                fetchData(categories[category]);
+              }
+            }
           },
           child: ListView(
             children: [
